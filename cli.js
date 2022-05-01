@@ -131,5 +131,11 @@ const argv = require('yargs/yargs')(process.argv.slice(2))
 	.argv
 
 if(argv.url !== undefined) {
+	const isValidUrl = argv.url.match(/(https?:\/\/(.+?\.)?zippyshare\.com(\/[A-Za-z0-9\-\._~:\/\?#\[\]@!$&'\(\)\*\+,;\=]*)?)/gm)
+
+	if(!isValidUrl) {
+		return console.log(chalk.red('URL is not valid!'))
+	}
+
 	main(argv).then()
 }
