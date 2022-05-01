@@ -1,0 +1,20 @@
+{
+  "name": "zippyshare-downloader",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.27.2",
+    "chalk": "2.4",
+    "cheerio": "^1.0.0-rc.10",
+    "cli-progress": "^3.10.0",
+    "request": "^2.88.2",
+    "yargs": "^17.4.1"
+  }
+}
