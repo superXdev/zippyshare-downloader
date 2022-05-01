@@ -42,6 +42,10 @@ async function getUrlDownload(url) {
 	// get html data
 	const html = await axios.get(url)
 
+	if(html.data.includes('File does not exist on this server')) {
+		return null
+	}
+
 	// split url into array
 	const splitUrl = url.split('/')
 
@@ -109,6 +113,11 @@ function download(url, fileName, callback) {
 
 async function main(argv) {
 	const finalURL = await getUrlDownload(argv.url)
+
+	if(finalURL === null) {
+		return console.log(chalk.red('File does not exist on this server'))
+	}
+
 	const fileName = (argv.output !== undefined) ? argv.output : finalURL.fileName
 
 	download(finalURL.url, fileName, () => console.log)
