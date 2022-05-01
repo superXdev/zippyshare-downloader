@@ -1,8 +1,11 @@
 {
-  "name": "zippyshare-downloader",
+  "name": "zippydr",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "a simple CLI application to download file from Zippyshare site",
+  "main": "cli.js",
+  "bin": {
+    "zippydr": "cli.js"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
