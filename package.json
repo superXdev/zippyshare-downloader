@@ -10,9 +10,13 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": ["cli", "zippyshare", "downloader"],
+  "author": {
+    "name" : "Fikri rudiansyah",
+    "email" : "fikrizhanking@gmail.com",
+    "url" : "https://fikri.vercel.app/"
+  },
+  "license": "MIT",
   "dependencies": {
     "axios": "^0.27.2",
     "chalk": "2.4",
