@@ -5,10 +5,6 @@ const { getUrlDownload } = require('./utils/url')
 const { download } = require('./utils/download')
 
 
-
-
-
-
 async function main(argv) {
 	const finalURL = await getUrlDownload(argv.url)
 
