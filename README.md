@@ -4,6 +4,18 @@ a simple CLI application to download file from Zippyshare site, you can easily d
 
 ![preview](https://github.com/superXdev/zippyshare-downloader/blob/main/preview.png?raw=true)
 
+
+## Changelog
+- 2.0.0 - 03 Mei 2022
+  - change main library
+  - adding batch mode
+- 1.2.3 - 02 Mei 2022
+  - code optimized
+  - adding license
+  - adding README file
+- 1.0.1 - 01 Mei 2022
+  - release to NPM & Github
+
 ## Installation
 
 ### NPM
