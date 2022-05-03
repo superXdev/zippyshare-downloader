@@ -42,6 +42,11 @@ a simple CLI application to download file from Zippyshare site, you can easily d
    zippydr --help
 ```
 
+### Fetch URL file
+```bash
+   zippydr -f <link>
+```
+
 ### Download file
 ```bash
    zippydr -u <link>
