@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 const chalk = require('chalk')
+const fs = require('fs')
 const Listr = require('listr')
 const { Observable } = require('rxjs')
 const cluster = require("cluster")
@@ -42,8 +43,18 @@ async function batchMode(argv) {
 
 	tasks.run()
 		.then(() => {
+			// create directory if configured
+			if(argv.d !== undefined) {
+				if (!fs.existsSync(argv.d)){
+				   fs.mkdirSync(argv.d)
+				}
+			}
+
 			console.log(`${chalk.yellow(validUrls.length)} file will be downloaded\n`)
 			validUrls.map((data) => {
+				// append dir data
+				data.dir = argv.d
+
 				const worker = cluster.fork()
 				worker.send(data)
 			})
@@ -70,6 +81,11 @@ const argv = require('yargs/yargs')(process.argv.slice(2))
 		desc: 'File name output',
 		type: 'string'
 	})
+	.option('output-dir', {
+		alias: 'd',
+		desc: 'Directory for output batch file',
+		type: 'string'
+	})
 	.help()
 	.argv
 
@@ -93,7 +109,7 @@ if(cluster.isMaster) {
 // worker for batch download
 if(cluster.isWorker) {
 	process.on('message', (data) => {
-		downloadBatch(data.url, data.fileName)
+		downloadBatch(data.url, data.fileName, data.dir)
 			.then()
 			.catch((err) => console.log(err))
 	})

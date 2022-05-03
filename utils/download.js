@@ -1,5 +1,6 @@
 const axios = require('axios')
 const fs = require('fs')
+const path = require('path')
 const chalk = require('chalk')
 const ProgressBar = require('progress')
 
@@ -31,7 +32,7 @@ function download(url, fileName) {
 }
 
 
-async function downloadBatch(url, fileName) {
+async function downloadBatch(url, fileName, dir) {
 	const { data, headers } = await axios({
 		url,
 		method: 'GET',
@@ -42,7 +43,8 @@ async function downloadBatch(url, fileName) {
 
 	console.log(`Downloading : ${chalk.white.bold(fileName)}`)
 
-	const writer = fs.createWriteStream(fileName)
+	const output = (dir === undefined) ? fileName : path.resolve(dir, fileName)
+	const writer = fs.createWriteStream(output)
 
 	const w = data.pipe(writer)
     w.on('finish', () => {
