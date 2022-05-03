@@ -1,6 +1,6 @@
 {
   "name": "zippydr",
-  "version": "2.0.2",
+  "version": "2.1.2",
   "repository": "https://github.com/superXdev/zippyshare-downloader",
   "description": "a simple CLI application to download file from Zippyshare site",
   "main": "cli.js",

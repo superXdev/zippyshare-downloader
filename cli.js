@@ -76,6 +76,11 @@ const argv = require('yargs/yargs')(process.argv.slice(2))
 		desc: 'List file of links',
 		type: 'string'
 	})
+	.option('fetch', {
+		alias: 'f',
+		desc: 'Fetch URL file',
+		type: 'string'
+	})
 	.option('output', {
 		alias: 'o',
 		desc: 'File name output',
@@ -103,6 +108,18 @@ if(cluster.isMaster) {
 
 	if(argv.batch !== undefined) {
 		batchMode(argv).then()
+	}
+
+	if(argv.fetch !== undefined) {
+		const isValidUrl = validateUrl(argv.fetch)
+
+		if(!isValidUrl) {
+			return console.log(chalk.red('URL is not valid!'))
+		}
+
+		getUrlDownload(argv.fetch)
+			.then(result => console.log(`Result : ${chalk.yellow(result.url)}`))
+			.catch(err => console.log(err))
 	}
 }
 
