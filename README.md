@@ -1,7 +1,6 @@
-
 # zippydr - Zippyshare downloader
 
-a simple CLI application to download file from Zippyshare site, you can easily download by typing in command line.
+a simple CLI application to download file from Zippyshare site, you can easily download by typing in command line. This tools have 2 mode for download: single file & batch file
 
 [![NPM](https://nodei.co/npm/zippydr.png?compact=true)](https://nodei.co/npm/zippydr/)
 
@@ -11,14 +10,14 @@ a simple CLI application to download file from Zippyshare site, you can easily d
 
 
 ## Changelog
-- 2.0.0 - 03 Mei 2022
+- **2.0.0 - 03 Mei 2022**
   - change main library
   - adding batch mode
-- 1.2.3 - 02 Mei 2022
+- **1.2.3 - 02 Mei 2022**
   - code optimized
   - adding license
   - adding README file
-- 1.0.1 - 01 Mei 2022
+- **1.0.1 - 01 Mei 2022**
   - release to NPM & Github
 
 ## Installation
@@ -51,4 +50,14 @@ a simple CLI application to download file from Zippyshare site, you can easily d
 ### with output file name
 ```bash
    zippydr -u <link> -o <filename>
+```
+
+### Download batch
+```bash
+   zippydr -b <your_file_links>
+```
+
+### with output folder
+```bash
+   zippydr -b <your_file_links> -d <foldername>
 ```
