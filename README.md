@@ -47,3 +47,13 @@ a simple CLI application to download file from Zippyshare site, you can easily d
 ```bash
    zippydr -u <link> -o <filename>
 ```
+
+### Download batch
+```bash
+   zippydr -b <your_file_links>
+```
+
+### with output folder
+```bash
+   zippydr -b <your_file_links> -d <foldername>
+```
