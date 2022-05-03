@@ -1,6 +1,7 @@
 
 const cheerio = require('cheerio')
 const axios = require('axios')
+const fs = require('fs')
 
 function getFileName(html) {
 	// parse using cheerio
@@ -13,25 +14,27 @@ function getFileName(html) {
 }
 
 
-function getUniqueNumber(html, splitUrl, fileName) {
+function getFileUrl(html) {
 	// regex to find math formula from script tag
 	// because the number generated from that formula
-	const re = new RegExp(`(?<=${splitUrl[4]})(.*)(?=${fileName})`, 'gm')
-	let uniqueNumber = html.data.match(re)[0].replace('/" + (', '').replace(') + "/', '')
-	// calc number from string
-	uniqueNumber = eval(uniqueNumber)
+	const re = new RegExp(`(?<=dlbutton)(.*)(?=;)`, 'gm')
+	let result = html.data.match(re)[0].replace("').href = ", "")
+	result = eval(result)
 
-	return uniqueNumber
+	return result
 }
 
 
-function buildURL(splitUrl, uniqueNumber, fileName) {
+function buildURL(splitUrl, fileUrl) {
 	// build url file
-	const finalURL = `${splitUrl[0]}//${splitUrl[2]}/d/${splitUrl[4]}/${uniqueNumber}/${fileName}`
+	const finalURL = `${splitUrl[0]}//${splitUrl[2]}${fileUrl}`
 
 	return finalURL
 }
 
+function validateUrl(url) {
+	return url.match(/(https?:\/\/(.+?\.)?zippyshare\.com(\/[A-Za-z0-9\-\._~:\/\?#\[\]@!$&'\(\)\*\+,;\=]*)?)/gm)
+}
 
 async function getUrlDownload(url) {
 	// get html data
@@ -46,10 +49,10 @@ async function getUrlDownload(url) {
 
 	// get file name & unique number
 	const fileName = getFileName(html)
-	const uniqueNumber = getUniqueNumber(html, splitUrl, fileName)
+	const fileUrl = getFileUrl(html)
 
 	// final URL
-	const finalURL = buildURL(splitUrl, uniqueNumber, fileName)
+	const finalURL = buildURL(splitUrl, fileUrl)
 
 	return {
 		url: finalURL,
@@ -57,4 +60,24 @@ async function getUrlDownload(url) {
 	}
 }
 
-module.exports = { getUrlDownload }
+async function scanUrls(file) {
+	let validUrls = []
+	const lists = fs.readFileSync(file, 'utf-8').split(/\r?\n/)
+
+	for(let i = 0; i < lists.length; i++) {
+		if(validateUrl(lists[i])) {
+			const finalURL = await getUrlDownload(lists[i])
+			if(finalURL !== null) {
+				validUrls.push(finalURL)
+			}
+		}
+	}
+
+	return validUrls
+}
+
+module.exports = { 
+	getUrlDownload,
+	scanUrls,
+	validateUrl
+}

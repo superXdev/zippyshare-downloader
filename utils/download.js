@@ -1,55 +1,57 @@
-
-const request = require('request')
+const axios = require('axios')
 const fs = require('fs')
-const _cliProgress = require('cli-progress')
 const chalk = require('chalk')
+const ProgressBar = require('progress')
 
 
-function download(url, fileName, callback) {
-    const progressBar = new _cliProgress.SingleBar({
-        format: '{bar} {percentage}% | ETA: {eta}s'
-    }, _cliProgress.Presets.shades_classic);
+function download(url, fileName) {
+	axios({
+		url,
+		method: 'GET',
+		responseType: 'stream'
+	}).then(({ headers, data }) => {
+		const totalLength = headers['content-length']
 
-    const file = fs.createWriteStream(fileName);
-    let receivedBytes = 0
-    
+		console.log(`File name : ${chalk.green(fileName)}`)
+		console.log(`Size      : ${chalk.yellow((totalLength / 1024 / 1024).toFixed(2))} MB\n`)
+		
+		const progressBar = new ProgressBar('[:bar] :percent :etas', {
+			complete: chalk.cyan('='),
+			incomplete: ' ',
+			width: 40,
+			total: parseInt(totalLength)
+		})
 
-    request.get(url)
-	    .on('response', (response) => {
-	        if (response.statusCode !== 200) {
-	            return callback('Response status was ' + response.statusCode);
-	        }
+		const writer = fs.createWriteStream(fileName)
 
-	        const totalBytes = response.headers['content-length'];
-
-	        console.log(`File name : ${chalk.green.bold(fileName)}`)
-	        console.log(`Size      : ${chalk.yellow((totalBytes / 1024 / 1024).toFixed(2) )} MB\n`)
-
-	        progressBar.start(totalBytes, 0);
-	    })
-	    .on('data', (chunk) => {
-	        receivedBytes += chunk.length;
-	        progressBar.update(receivedBytes);
-	    })
-	    .pipe(file)
-	    .on('error', (err) => {
-	        fs.unlink(fileName);
-	        progressBar.stop();
-	        return callback(err.message);
-	    });
-
-	file
-		.on('finish', () => {
-	        progressBar.stop();
-	        file.close(callback);
-	    });
-
-	file
-		.on('error', (err) => {
-	        fs.unlink(fileName); 
-	        progressBar.stop();
-	        return callback(err.message);
-	    });
+		data.on('data', (chunk) => progressBar.tick(chunk.length))
+		data.pipe(writer)
+	})
+	
 }
 
-module.exports = { download }
+
+async function downloadBatch(url, fileName) {
+	const { data, headers } = await axios({
+		url,
+		method: 'GET',
+		responseType: 'stream'
+	})
+	
+	const totalLength = headers['content-length']
+
+	console.log(`Downloading : ${chalk.white.bold(fileName)}`)
+
+	const writer = fs.createWriteStream(fileName)
+
+	const w = data.pipe(writer)
+    w.on('finish', () => {
+		console.log(`Completed : ${chalk.green(fileName)}`)
+		process.exit(0)
+    })
+}
+
+module.exports = {
+	download,
+	downloadBatch
+}
