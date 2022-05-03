@@ -4,7 +4,7 @@ a simple CLI application to download file from Zippyshare site, you can easily d
 
 [![NPM](https://nodei.co/npm/zippydr.png?compact=true)](https://nodei.co/npm/zippydr/)
 
-![GitHub package.json version](https://img.shields.io/github/package-json/v/superXdev/zippyshare-downloader.svg) ![GitHub](https://img.shields.io/github/license/superXdev/zippyshare-downloader.svg)
+![GitHub package.json version](https://img.shields.io/github/package-json/v/superXdev/zippyshare-downloader.svg) ![GitHub](https://img.shields.io/github/license/superXdev/zippyshare-downloader.svg) ![npm](https://img.shields.io/npm/dw/zippydr)
 
 ![preview](https://github.com/superXdev/zippyshare-downloader/blob/main/preview.png?raw=true)
 
