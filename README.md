@@ -12,6 +12,7 @@ a simple CLI application to download file from Zippyshare site, you can easily d
    - [NPM](#npm)
    - [Github](#github)
 3. [Usage](#usage)
+   - [Fetch URL] (#fetch)
    - [Download file](#download-file)
    - [Download batch](#download-batch)
 4. [License](#license)
@@ -51,7 +52,7 @@ a simple CLI application to download file from Zippyshare site, you can easily d
 ```bash
    zippydr --help
 ```
-
+<a name="fetch"></a>
 ### Fetch URL file
 ```bash
    zippydr -f <link>
