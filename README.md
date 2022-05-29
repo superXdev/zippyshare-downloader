@@ -2,7 +2,7 @@
 
 a simple CLI application to download file from Zippyshare site, you can easily download by typing in command line. This tools have 2 mode for download: single file & batch file
 
-[![npm](https://badge.fury.io/js/zippydr.svg)](http://badge.fury.io/js/zippydr) ![GitHub](https://img.shields.io/github/license/superXdev/zippyshare-downloader.svg) ![npm](https://img.shields.io/npm/dw/zippydr)
+[![npm](https://badge.fury.io/js/zippydr.svg)](http://badge.fury.io/js/zippydr) ![GitHub](https://img.shields.io/github/license/superXdev/zippyshare-downloader.svg) ![npm](https://img.shields.io/npm/dm/zippydr)
 
 ![preview](https://github.com/superXdev/zippyshare-downloader/blob/main/preview.png?raw=true)
 
